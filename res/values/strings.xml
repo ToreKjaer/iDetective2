@@ -16,5 +16,7 @@
     <string name="name">Navn</string>
     <string name="general">Generelt</string>
     <string name="prefNameSummary">Ændre spilnavn</string>
+    <string name="title_activity_test">Test</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
