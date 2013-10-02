@@ -41,6 +41,10 @@
    			android:label="@string/settings"
    			android:parentActivityName="com.example.idetective2.MainActivity" >
  		</activity>
+ 		<activity
+    		android:name="com.example.idetective2.PrefsActivity1"
+   			android:label="@string/settings" >
+ 		</activity>
     </application>
 
 </manifest>
