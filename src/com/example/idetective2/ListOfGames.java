@@ -21,6 +21,7 @@ public class ListOfGames extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.list_of_games, menu);
 		return false;
+		//this is a test
 	}
 
 }
