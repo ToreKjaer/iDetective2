@@ -20,4 +20,3 @@ public class WaitingForPlayersList extends Activity {
 	}
 
 }
-//TESTCOMMENT
