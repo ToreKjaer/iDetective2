@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".NewGameActivity" >
+    
+    <TextView
+    android:id="@+id/NewGameTitle"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="10dp"
+    android:textSize="25sp"
+    android:text="@string/new_game"
+    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/NewGameTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewGameTitle"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="@string/new_game_textview" />
+
+    <EditText
+        android:id="@+id/NewGameEditGameName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NewGameTextView"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textAutoCorrect" > <!-- OBS! No characterlimit  -->
+        <requestFocus />
+    </EditText>
+    
+    <Button
+        android:id="@+id/NewGameCreateBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp"
+        android:text="@string/create_game_btn" />    
+
+</RelativeLayout>
