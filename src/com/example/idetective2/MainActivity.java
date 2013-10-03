@@ -116,6 +116,7 @@ public class MainActivity extends Activity {
     private void gotoNewJoinGameActivity() {
     	Intent intent = new Intent(getApplicationContext(), NewJoinGame.class);
     	startActivity(intent);
+    	overridePendingTransition(R.anim.slide_left, R.anim.push_left_out);
     }
     
     private void gotoSettingsActivity() {

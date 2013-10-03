@@ -3,6 +3,8 @@
     package="com.example.idetective2"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -37,10 +39,10 @@
             android:parentActivityName="com.example.idetective2.MainActivity" >
         </activity>
         <activity
-            android:name="com.example.idetective2.PrefsActivity"
-            android:label="@string/settings"
-            android:parentActivityName="com.example.idetective2.MainActivity" >
-        </activity>
+    		android:name="com.example.idetective2.PrefsActivity"
+   			android:label="@string/settings"
+   			android:parentActivityName="com.example.idetective2.MainActivity" >
+ 		</activity>
         <activity
             android:name="com.example.idetective2.NewGameActivity"
             android:label="@string/title_activity_new_game" >
