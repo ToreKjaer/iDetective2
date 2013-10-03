@@ -37,10 +37,14 @@
             android:parentActivityName="com.example.idetective2.MainActivity" >
         </activity>
         <activity
-    		android:name="com.example.idetective2.PrefsActivity"
-   			android:label="@string/settings"
-   			android:parentActivityName="com.example.idetective2.MainActivity" >
- 		</activity>
+            android:name="com.example.idetective2.PrefsActivity"
+            android:label="@string/settings"
+            android:parentActivityName="com.example.idetective2.MainActivity" >
+        </activity>
+        <activity
+            android:name="com.example.idetective2.NewGameActivity"
+            android:label="@string/title_activity_new_game" >
+        </activity>
     </application>
 
 </manifest>
