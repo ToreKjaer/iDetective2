@@ -54,16 +54,15 @@ public class NewJoinGame extends Activity {
 	    
 	    return true;
 	}
-	
+	//Opens JoinGameActivity.class
 	private void gotoJoinGameActivity() {
     	Intent intent = new Intent(getApplicationContext(), ListOfGames.class);
     	startActivity(intent);
     }
-
+	//Opens NewGameActivity.class
 	private void gotoNewGameActivity() {
-		// TODO
-    	/*Intent intent = new Intent(getApplicationContext(), XXX.class);
-    	startActivity(intent);*/
+    	Intent intent = new Intent(getApplicationContext(), NewGameActivity.class);
+    	startActivity(intent);
     }
 	
 	public void onBackPressed() {
