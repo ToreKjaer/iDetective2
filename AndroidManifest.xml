@@ -4,8 +4,25 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.INTERNET" >
-    </uses-permission>
+    <permission
+        android:name="com.example.idetective2.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.idetective2.permission.MAPS_RECEIVE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Required to show current location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Required OpenGL ES 2.0. for Maps V2 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -58,6 +75,16 @@
         <activity
             android:name="com.example.idetective2.Highscores"
             android:label="@string/title_activity_highscores" >
+        </activity>
+
+         <!-- Google maps API key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDCL4aHjYW4UK0Z0EsXc8zGFuee0Qi8zlk" />
+
+        <activity
+            android:name="com.example.idetective2.Maps"
+            android:label="@string/title_activity_maps" >
         </activity>
     </application>
 
