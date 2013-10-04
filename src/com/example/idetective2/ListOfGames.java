@@ -17,26 +17,48 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class ListOfGames extends Activity {
+	private ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_of_games);
 		
+		// Get data
+		Network network = new Network();
+		network.execute("");
+		
+		// Hide the actionbar title
+		getActionBar().setDisplayShowTitleEnabled(false);
+		
+		listView = (ListView) findViewById(R.id.JoinGameList);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Toast.makeText(getBaseContext(), listView.getItemAtPosition(arg2).toString(), Toast.LENGTH_LONG).show();
+				
+			}
+		});
+
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
-		connectToJSON();
 	}
 
 	@Override
@@ -44,69 +66,34 @@ public class ListOfGames extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.list_of_games, menu);
 		return false;
-		//this is a test
-	}
-	
-	public void connectToJSON() {
-		JSONArray jArray = null;
-		String result = "";
-		StringBuilder stringBuilder = new StringBuilder();
-		InputStream inputStream = null;
-		
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		ArrayList<String> nameList = new ArrayList<String>(); 
-		
-		try {
-			HttpClient httpClient = new DefaultHttpClient();
-			
-			HttpPost httpPost = new HttpPost("#");
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			
-			HttpResponse response = httpClient.execute(httpPost);
-			
-			HttpEntity httpEntity = response.getEntity();
-			
-			inputStream = httpEntity.getContent();
-		} catch (Exception e) {
-			Toast.makeText(getBaseContext(), "HTTP: " + e.toString(), Toast.LENGTH_LONG).show();
-		}
-		
-		// Convert response to string
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"),8);
-			
-			stringBuilder.append(reader.readLine() + "\n");
-			
-			String line = "0";
-			
-			while ((line = reader.readLine()) != null) {
-				stringBuilder.append(line + "\n");
-			}
-			
-			inputStream.close();
-			
-			result = stringBuilder.toString();
-		} catch (Exception e) {
-			Toast.makeText(getBaseContext(), "Conversion: " + e.toString(), Toast.LENGTH_LONG).show();
-		}
-		
-		try {
-			jArray = new JSONArray(result);
-			
-			JSONObject json_data = null;
-			
-			for (int i = 0; i < jArray.length(); i++) {
-				json_data = jArray.getJSONObject(i);
-				nameList.add(json_data.getString("name"));
-			}
-			
-			ListView listView = (ListView) findViewById(R.id.JoinGameList);
-			listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, nameList));
-		} catch (JSONException e) {
-			Toast.makeText(getBaseContext(), "JSON: " + e.toString(), Toast.LENGTH_LONG).show();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 	}
 
+	private class Network extends AsyncTask<String, Void, String> {
+		private ArrayList nameList;
+		private ProgressDialog progress;
+
+		@Override
+		protected String doInBackground(String... params) {
+			nameList = new NetworkHandler().getFromDB("http://users-cs.au.dk/legaard/get_new_games.php");
+			return null;
+		}
+
+		/*
+		 * Convert the ArrayList to fit in the ListView in the Android Activity 
+		 */
+		@Override
+		public void onPostExecute(String result) {
+			listView.setAdapter(new ArrayAdapter(ListOfGames.this, android.R.layout.simple_list_item_1, nameList));
+			progress.dismiss(); // Dismiss the progress dialog, so it's not on the screen anymore 
+		}
+		
+		/*
+		 * Make a progress dialog on the screen and show it just before the app starts fetching data 
+		 */
+		@Override
+		public void onPreExecute() {
+			progress = ProgressDialog.show(ListOfGames.this, "", "Loading");
+		}
+		
+	}
 }

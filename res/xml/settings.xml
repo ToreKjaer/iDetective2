@@ -8,6 +8,9 @@
             android:title="@string/name"
             android:positiveButtonText="Gem"
             android:negativeButtonText="Annuller" />
+        <Preference 
+            android:title="@string/your_id"
+            android:key="playerID" />
     </PreferenceCategory>
 
 </PreferenceScreen>

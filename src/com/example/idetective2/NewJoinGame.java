@@ -16,6 +16,9 @@ public class NewJoinGame extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_join_game);
 		
+		// Hide the actionbar title
+		getActionBar().setDisplayShowTitleEnabled(false);
+		
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
@@ -61,9 +64,8 @@ public class NewJoinGame extends Activity {
     }
 
 	private void gotoNewGameActivity() {
-		// TODO
-    	/*Intent intent = new Intent(getApplicationContext(), XXX.class);
-    	startActivity(intent);*/
+    	Intent intent = new Intent(getApplicationContext(), NewGameActivity.class);
+    	startActivity(intent);
     }
 	
 	public void onBackPressed() {

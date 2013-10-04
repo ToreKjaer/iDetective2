@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:background="#000000" >
 
     <Button
         android:id="@+id/newGameBtn"
@@ -15,7 +16,8 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/highscoreBtn"
         android:layout_marginBottom="50dp"
-        android:text="@string/new_game" />
+        android:text="@string/new_game"
+        android:background="#FFA200" />
 
     <Button
         android:id="@+id/highscoreBtn"
@@ -23,7 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/highscore" />
+        android:text="@string/highscore"
+        android:background="#FFA200" />
 
     <Button
         android:id="@+id/settingBtn"
@@ -32,7 +35,8 @@
         android:layout_below="@+id/highscoreBtn"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/settings" />
+        android:text="@string/settings"
+        android:background="#FFA200" />
 
     <TextView
         android:id="@+id/welcomeText"
@@ -41,6 +45,7 @@
         android:layout_above="@+id/newGameBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>

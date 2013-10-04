@@ -10,6 +10,9 @@ public class WaitingForPlayersList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_waiting_for_players_list);
+		
+		// Hide the actionbar title
+		getActionBar().setDisplayShowTitleEnabled(false);
 	}
 
 	@Override
