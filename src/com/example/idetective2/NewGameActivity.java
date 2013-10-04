@@ -12,7 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -58,7 +57,6 @@ public class NewGameActivity extends Activity {
 	}
 	
 	private class Network extends AsyncTask<String, Void, String> {
-		private ProgressDialog progress;
 
 		@Override
 		protected String doInBackground(String... params) {
@@ -72,16 +70,7 @@ public class NewGameActivity extends Activity {
 		 * Convert the ArrayList to fit in the ListView in the Android Activity 
 		 */
 		protected void onPostExecute(String result) {
-			progress.dismiss(); // Dismiss the progress dialog, so it's not on the screen anymore
 			Toast.makeText(getApplicationContext(), "Dit spil er blevet oprettet!", Toast.LENGTH_LONG).show();
-		}
-		
-		/*
-		 * Make a progress dialog on the screen and show it just before the app starts adding data 
-		 */
-		@Override
-		public void onPreExecute() {
-			progress = ProgressDialog.show(NewGameActivity.this, "", "Tilføjer spil");
 		}
 
 	}

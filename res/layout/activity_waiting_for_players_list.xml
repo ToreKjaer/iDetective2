@@ -13,17 +13,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:textSize="25sp"
         android:text="@string/waiting_for_players_list_title"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-     <TextView
-        android:id="@+id/WaitingGameTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/WaitingForPlayersListTitle"
-        android:layout_marginTop="5dp" />
 
     <ListView
         android:id="@+id/WaitingForPlayersList"
@@ -32,7 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_below="@+id/WaitingForPlayersListTitle"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="20dp" >
     </ListView>
 
     <Button

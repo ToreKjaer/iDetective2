@@ -3,7 +3,6 @@ package com.example.idetective2;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -12,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.Editable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -55,9 +53,6 @@ public class MainActivity extends Activity {
 					prefEditor.putString("Name", value.toString());
 					prefEditor.putString("playerID", playerID);
 					prefEditor.commit();
-					
-					Network network = new Network();
-					network.execute(playerID, value.toString());
 					
 					updateWelcomeText();
 				}
@@ -143,17 +138,6 @@ public class MainActivity extends Activity {
     private void gotoSettingsActivity() {
     	Intent intent = new Intent(getApplicationContext(), PrefsActivity.class);
     	startActivity(intent);
-    }
-    
-    private class Network extends AsyncTask<String, Void, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			NetworkHandler nHandler = new NetworkHandler();
-			nHandler.manageUserInDB("http://users-cs.au.dk/legaard/add_new_user.php", params[0], params[1]);
-			return null;
-		}
-    	
     }
     
 }

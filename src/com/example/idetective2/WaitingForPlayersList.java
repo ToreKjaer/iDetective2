@@ -3,7 +3,6 @@ package com.example.idetective2;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.widget.TextView;
 
 public class WaitingForPlayersList extends Activity {
 
@@ -14,11 +13,6 @@ public class WaitingForPlayersList extends Activity {
 		
 		// Hide the actionbar title
 		getActionBar().setDisplayShowTitleEnabled(false);
-		
-		Bundle extras = getIntent().getExtras();
-		
-		TextView gameTitle = (TextView) findViewById(R.id.WaitingGameTitle);
-		gameTitle.setText("Spilnavn: \"" + extras.getString("gameName") + "\"");
 	}
 
 	@Override

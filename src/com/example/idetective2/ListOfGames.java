@@ -1,13 +1,28 @@
 package com.example.idetective2;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,9 +52,8 @@ public class ListOfGames extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent i = new Intent(getApplicationContext(), WaitingForPlayersList.class);
-				i.putExtra("gameName", listView.getItemAtPosition(arg2).toString());
-				startActivity(i);
+				Toast.makeText(getBaseContext(), listView.getItemAtPosition(arg2).toString(), Toast.LENGTH_LONG).show();
+				
 			}
 		});
 
@@ -55,7 +69,7 @@ public class ListOfGames extends Activity {
 	}
 
 	private class Network extends AsyncTask<String, Void, String> {
-		private ArrayList<String> nameList;
+		private ArrayList nameList;
 		private ProgressDialog progress;
 
 		@Override
@@ -78,7 +92,7 @@ public class ListOfGames extends Activity {
 		 */
 		@Override
 		public void onPreExecute() {
-			progress = ProgressDialog.show(ListOfGames.this, "", "Henter spil");
+			progress = ProgressDialog.show(ListOfGames.this, "", "Loading");
 		}
 		
 	}
