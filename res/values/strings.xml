@@ -21,5 +21,7 @@
     <string name="new_game_textview">Her opretter du et nyt spil. Indtast det ønskede navn for spilsessionen. Tryk derefter start!</string>
     <string name="create_game_btn">Opret spil!</string>
     <string name="your_id">Bruger ID</string>
+    <string name="title_activity_highscores">Highscores</string>
+    <string name="highscores_title">Highscores</string>
 
 </resources>
