@@ -23,5 +23,7 @@
     <string name="your_id">Bruger ID</string>
     <string name="title_activity_highscores">Highscores</string>
     <string name="highscores_title">Highscores</string>
+    <string name="title_activity_maps">Maps</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
