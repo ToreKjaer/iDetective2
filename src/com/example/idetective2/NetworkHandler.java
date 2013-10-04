@@ -53,8 +53,8 @@ public class NetworkHandler {
 		
 		try {
 			ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("gameName", playerID)); // The players ID
-			nameValuePairs.add(new BasicNameValuePair("gameName", name)); // The players name
+			nameValuePairs.add(new BasicNameValuePair("playerID", playerID)); // The players ID
+			nameValuePairs.add(new BasicNameValuePair("playerName", name)); // The players name
 			nameValuePairs.add(new BasicNameValuePair("appPassword", "t8cZ5L5eBRM7TUDDTCg2GY4DKbrVR5")); // Used for verification
 			
 			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
