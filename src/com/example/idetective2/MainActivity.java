@@ -1,5 +1,8 @@
 package com.example.idetective2;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -35,6 +39,8 @@ public class MainActivity extends Activity {
         	final EditText name = new EditText(this);
         	getName.setView(name);
         	
+        	final String playerID = new BigInteger(130, new SecureRandom()).toString(32);
+        	
         	// Set what the positive button will do
         	getName.setPositiveButton("Gem", new DialogInterface.OnClickListener() {
 				
@@ -44,7 +50,9 @@ public class MainActivity extends Activity {
 					Editable value = name.getText();
 					
 					// Save the name in shared preferences, so it can be used throughout the game
-					prefEditor.putString("Name", value.toString()).commit();
+					prefEditor.putString("Name", value.toString());
+					prefEditor.putString("playerID", playerID);
+					prefEditor.commit();
 					
 					updateWelcomeText();
 				}
@@ -73,6 +81,14 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// Start the NewJoinGame activity
 				gotoNewJoinGameActivity();
+			}
+		});
+        
+        Button highscoreBtn = (Button) findViewById(R.id.highscoreBtn);
+        highscoreBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO
 			}
 		});
         
