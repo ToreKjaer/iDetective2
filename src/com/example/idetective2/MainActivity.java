@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
         	final EditText name = new EditText(this);
         	getName.setView(name);
         	
-        	final String playerID = new BigInteger(130, new SecureRandom()).toString(32);
+        	final String playerID = new GenerateRandomId().getId();
         	
         	// Set what the positive button will do
         	getName.setPositiveButton("Gem", new DialogInterface.OnClickListener() {
@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
         highscoreBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), Maps.class);
+				Intent intent = new Intent(getApplicationContext(), Highscores.class);
 		    	startActivity(intent);
 			}
 		});
