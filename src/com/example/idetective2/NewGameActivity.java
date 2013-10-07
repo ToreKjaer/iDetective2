@@ -3,14 +3,8 @@ package com.example.idetective2;
 import java.util.ArrayList;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-
-import com.google.android.gms.internal.j;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
