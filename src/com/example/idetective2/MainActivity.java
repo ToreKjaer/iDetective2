@@ -1,8 +1,5 @@
 package com.example.idetective2;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,13 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.text.Editable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -85,7 +80,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Start the NewJoinGame activity
-				gotoNewJoinGameActivity();
+				Intent intent = new Intent(getApplicationContext(), NewJoinGame.class);
+		    	startActivity(intent);
+		    	overridePendingTransition(R.anim.slide_left, R.anim.push_left_out);
 			}
 		});
         
@@ -93,6 +90,7 @@ public class MainActivity extends Activity {
         highscoreBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// Start the Highscores activity
 				Intent intent = new Intent(getApplicationContext(), Highscores.class);
 		    	startActivity(intent);
 			}
@@ -103,7 +101,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Start the NewJoinGame activity
-				gotoSettingsActivity();
+				Intent intent = new Intent(getApplicationContext(), PrefsActivity.class);
+		    	startActivity(intent);
 			}
 		});
     }
@@ -133,17 +132,6 @@ public class MainActivity extends Activity {
     	// Update the welcome text at main screen
         welcomeText = (TextView) findViewById(R.id.welcomeText);
         welcomeText.setText("Velkommen agent " + settings.getString("Name", "ukendt"));
-    }
-    
-    private void gotoNewJoinGameActivity() {
-    	Intent intent = new Intent(getApplicationContext(), NewJoinGame.class);
-    	startActivity(intent);
-    	overridePendingTransition(R.anim.slide_left, R.anim.push_left_out);
-    }
-    
-    private void gotoSettingsActivity() {
-    	Intent intent = new Intent(getApplicationContext(), PrefsActivity.class);
-    	startActivity(intent);
     }
     
     private class Network extends AsyncTask<String, Void, String> {

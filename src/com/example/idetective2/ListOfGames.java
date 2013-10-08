@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ListOfGames extends Activity {
 	private ListView listView;
@@ -66,7 +67,7 @@ public class ListOfGames extends Activity {
 	}
 
 	/*
-	 * Get data via AsyncTask
+	 * Get current games via AsyncTask
 	 */
 	private class GetGamesList extends AsyncTask<String, Void, String> {
 		// Create an ArrayList to hold the names of the games
@@ -121,10 +122,16 @@ public class ListOfGames extends Activity {
 		 */
 		@Override
 		public void onPostExecute(String result) {
-			listView.setAdapter(new ArrayAdapter<String>(ListOfGames.this, android.R.layout.simple_list_item_1, nameList));
-			
 			// Dismiss the progress dialog, so it's not on the screen anymore
 			progress.dismiss(); 
+			
+			if (nameList.size() > 0) {
+				listView.setAdapter(new ArrayAdapter<String>(ListOfGames.this, android.R.layout.simple_list_item_1, nameList));
+			} else {
+				Toast.makeText(getApplicationContext(), "Der er desværre ingen spil", Toast.LENGTH_LONG).show();
+			}
+			
+			
 		}
 	}
 }

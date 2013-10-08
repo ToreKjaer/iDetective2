@@ -30,20 +30,10 @@
 
     <Button
         android:id="@+id/startbtn"
-        android:layout_width="140dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/WaitingForPlayersList"
         android:layout_marginBottom="0dp"
         android:text="@string/startbtn" />
-    
-    <Button
-        android:id="@+id/refreshbtn"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/WaitingForPlayersList"
-        android:layout_marginBottom="0dp"
-        android:text="@string/refreshbtn" />
 
 </RelativeLayout>

@@ -3,13 +3,12 @@
     package="com.example.idetective2"
     android:versionCode="1"
     android:versionName="1.0" >
-    
+
     <permission
         android:name="com.example.idetective2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.example.idetective2.permission.MAPS_RECEIVE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -74,17 +73,38 @@
         </activity>
         <activity
             android:name="com.example.idetective2.Highscores"
-            android:label="@string/title_activity_highscores" >
+            android:label="@string/title_activity_highscores"
+            android:parentActivityName="com.example.idetective2.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.idetective2.Maps"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/title_activity_maps"
+            android:parentActivityName="com.example.idetective2.MainActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        
+
         <!-- Google maps API key -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDCL4aHjYW4UK0Z0EsXc8zGFuee0Qi8zlk" />
+
+        <activity
+            android:name="com.example.idetective2.PhoneActivity"
+            android:label="@string/title_activity_phone" >
+        </activity>
+        <activity
+            android:name="com.example.idetective2.CutsceneActivity"
+            android:label="@string/title_activity_cutscene" >
+        </activity>
+        <activity
+            android:name="com.example.idetective2.CameraActivity"
+            android:label="@string/title_activity_camera" >
+        </activity>
+        <activity
+            android:name="com.example.idetective2.ProffessorPuzzleActivity"
+            android:label="@string/title_activity_proffessor_puzzle" >
+        </activity>
     </application>
 
 </manifest>

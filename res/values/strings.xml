@@ -25,5 +25,13 @@
     <string name="highscores_title">Highscores</string>
     <string name="title_activity_maps">Maps</string>
     <string name="refreshbtn">Opdater</string>
+    <string name="title_activity_phone">PhoneActivity</string>
+    <string name="xenia_persson">Xenia Persson</string>
+    <string name="pet">PET</string>
+    <string name="answerCall">Besvar opkald</string>
+    <string name="title_activity_cutscene">CutsceneActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_proffessor_puzzle">ProffessorPuzzleActivity</string>
 
 </resources>

@@ -25,17 +25,17 @@ public class Highscores extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_highscores);
 		
-		// Get data
+		// Get highscores
 		new GetHighscores().execute();
 		
 		// Hide the actionbar title
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
+		// List to hold score information
 		listview = (ListView) findViewById(R.id.highscoresList);
 		
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
 	}
 
 	@Override
@@ -45,6 +45,9 @@ public class Highscores extends Activity {
 		return false;
 	}
 	
+	/*
+	 * Get the highscores via AsyncTask
+	 */
 	private class GetHighscores extends AsyncTask<String, Void, String> {
 		private ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		private ProgressDialog progress;
@@ -67,12 +70,12 @@ public class Highscores extends Activity {
 								String name = jObject.getString("name");
 								String score = "Score: " + jObject.getString("score");
 								
+								// Put the name and score into a HashMap, which is used later in the listview
 								HashMap<String, String> map = new HashMap<String, String>();
-								
 								map.put("name", name);
 								map.put("score", score);
 								
-								// Add it to the ArrayList
+								// Add the map to the ArrayList
 								list.add(map);
 							}
 						} catch (JSONException e) {
@@ -85,7 +88,8 @@ public class Highscores extends Activity {
 		}
 		
 		/*
-		 * Convert the ArrayList to fit in the ListView in the Android Activity 
+		 * Convert the ArrayList to fit in the ListView in the Android Activity with both name and scores
+		 * Layout of each row in the list is defined in the list_row.xml
 		 */
 		@Override
 		public void onPostExecute(String result) {

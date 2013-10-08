@@ -33,7 +33,6 @@ public class NewGameActivity extends Activity {
 		// Get the textfielt from the activity
 		final EditText gameName = (EditText) findViewById(R.id.NewGameEditGameName);
 		
-		
 		// Get the button from the activity and apply an onClickListener
 		Button createGameBtn = (Button) findViewById(R.id.NewGameCreateBtn);
 		createGameBtn.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +65,7 @@ public class NewGameActivity extends Activity {
 	private class AddGame extends AsyncTask<String, Void, String> {
 		private ProgressDialog progress;
 		private int success;
-		private String message;
-		private String gameId;
+		private String message, gameId, gameOwner;
 		
 		/*
 		 * Make a progress dialog on the screen and show it just before the app starts adding data 
@@ -84,13 +82,14 @@ public class NewGameActivity extends Activity {
 		protected String doInBackground(String... params) {
 			
 			gameId = new GenerateRandomId().getId();
+			
 			final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-			final String playerId = settings.getString("playerID", "NULL"); // Get the player id to identify the owner of the game
+			gameOwner = settings.getString("playerID", "NULL"); // Get the player id to identify the owner of the game
 				
 			ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("gameId", gameId)); // The game ID
 			nameValuePairs.add(new BasicNameValuePair("gameName", params[0])); // The game name
-			nameValuePairs.add(new BasicNameValuePair("gameOwner", playerId)); // The owner of the game
+			nameValuePairs.add(new BasicNameValuePair("gameOwner", gameOwner)); // The owner of the game
 			nameValuePairs.add(new BasicNameValuePair("appPassword", "t8cZ5L5eBRM7TUDDTCg2GY4DKbrVR5")); // Used for verification
 				
 			JSONObject jObject = new JSONParser().addToDatabase("http://users-cs.au.dk/legaard/create_new_game.php", nameValuePairs);
@@ -121,6 +120,7 @@ public class NewGameActivity extends Activity {
 				
 				Intent i = new Intent(getApplicationContext(), WaitingForPlayersList.class);
 				i.putExtra("gameId", gameId);
+				i.putExtra("gameOwner", gameOwner);
 				startActivity(i);
 				finish();
 			} else {

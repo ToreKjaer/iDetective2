@@ -10,9 +10,9 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -25,8 +25,8 @@ import android.widget.ListView;
 public class WaitingForPlayersList extends Activity {
 	private ListView listView;
 	private String gameId, gameOwner;
-	
 	private String playerId = "";
+	private Handler handler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +39,31 @@ public class WaitingForPlayersList extends Activity {
 		final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		playerId = settings.getString("playerID", "NULL"); // Get the player id to identify the owner of the game
 		
+		// Set the listview
 		listView = (ListView) findViewById(R.id.WaitingForPlayersList);
 		
+		// Get extras from previous intent
 		Bundle extras = getIntent().getExtras();
 		gameId = extras.getString("gameId");
 		gameOwner = extras.getString("gameOwner");
 		
-		new AddPlayer().execute();
+		Log.e("LOG", "Player: " + playerId + " og owner " + gameOwner);
 		
+		new AddPlayer().execute(); // Add player to the game
+		
+		// Start the actual game
 		Button startButton = (Button) findViewById(R.id.startbtn);
 		startButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), Maps.class);
-		    	startActivity(intent);
+				// Update the status for the game in the database
+				new GameStatus().execute("update");
 				
+				// Show next activity
+				Intent intent = new Intent(getApplicationContext(), PhoneActivity.class);
+				//intent.putExtra("puzzleNumber", 0); // Show first location to go to
+		    	startActivity(intent);
 			}
 		});
 		
@@ -66,17 +75,23 @@ public class WaitingForPlayersList extends Activity {
 		}
 		
 		// Refresh the view displaying all the players attending the current game
-		Button refreshButton = (Button) findViewById(R.id.refreshbtn);
-		refreshButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				new GetPlayers().execute();
-				
-			}
-		});
-		
+		handler.postDelayed(runnable, 5000);
 	}
+	
+	/*
+	 * Check for new players and for if the games has begun every 5 seconds
+	 */
+	private Runnable runnable = new Runnable() {
+
+		@Override
+		public void run() {
+			new GetPlayers().execute();
+			new GameStatus().execute("check");
+			
+			handler.postDelayed(this, 5000);
+		}
+		
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,10 +101,16 @@ public class WaitingForPlayersList extends Activity {
 	}
 	
 	@Override
+	/*
+	 * When a player leaves this activity, then delete that person from the current game in the database
+	 * This way, the person will no longer be attending the game
+	 */
 	protected void onStop() {
 		super.onStop();
 		
-		new DeletePlayer().execute();
+		handler.removeCallbacks(runnable); // Stop the thread from executing when the activity is stopped
+		
+		new DeletePlayer().execute(); // Delete player from the list
 	}
 	
 	/*
@@ -162,17 +183,6 @@ public class WaitingForPlayersList extends Activity {
 		// Create an ArrayList to hold the names of the games
 		private ArrayList<String> nameList = new ArrayList<String>();
 		
-		// Progress to show that the app is fetching some data
-		private ProgressDialog progress;
-		
-		/*
-		 * Make a progress dialog on the screen and show it just before the app starts fetching data 
-		 */
-		@Override
-		public void onPreExecute() {
-			progress = ProgressDialog.show(WaitingForPlayersList.this, "", "Finder spillere");
-		}
-
 		@Override
 		protected String doInBackground(String... params) {
 			// Create JSONParser instance
@@ -211,17 +221,7 @@ public class WaitingForPlayersList extends Activity {
 		@Override
 		public void onPostExecute(String result) {
 			// If the game has been removed by the owner, go back to the gameslistview
-			if (nameList.size() > 0) {
-				listView.setAdapter(new ArrayAdapter<String>(WaitingForPlayersList.this, android.R.layout.simple_list_item_1, nameList));
-				
-				// Dismiss the progress dialog, so it's not on the screen anymore
-				progress.dismiss(); 
-			} else {
-				// Dismiss the progress dialog, so it's not on the screen anymore
-				progress.dismiss(); 
-				
-				finish();
-			}
+			listView.setAdapter(new ArrayAdapter<String>(WaitingForPlayersList.this, android.R.layout.simple_list_item_1, nameList));
 		}
 	}
 	
@@ -242,5 +242,56 @@ public class WaitingForPlayersList extends Activity {
 			
 			return null;
 		}
+	}
+	
+	/*
+	 * AsyncTask to handle the gamestatus
+	 * If parameter is "start", then the game posts to server that is has begun
+	 * If parameter is "check", then a check is performed to see wether or not the game has begun
+	 */
+	private class GameStatus extends AsyncTask<String, Void, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			if (params[0].equals("update")) {
+				ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("gameId", gameId));
+				
+				new JSONParser().addToDatabase("http://users-cs.au.dk/legaard/update_game_status.php", nameValuePairs);
+			} else if (params[0].equals("check")) {
+				String status = "n";
+				
+				ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("gameId", gameId));
+				
+				JSONObject json = new JSONParser().addToDatabase("http://users-cs.au.dk/legaard/get_game_status.php", nameValuePairs);
+				
+				try {
+					// Get the JSONArray called "games" - ex: {"games":[{"name":"First game ever!"}, ......
+					JSONArray games = json.getJSONArray("games");
+					
+					for (int i = 0; i < games.length(); i++) {
+						// Get the first JSONObject in the JSONArray - ex: {"name":"First game ever!"}
+						JSONObject jObject1 = games.getJSONObject(i);
+						
+						// Get the string - ex: "First game ever!"
+						status = jObject1.getString("status");
+					}
+				} catch (JSONException e) {
+					Log.e("JSONArray error:", "Error getting JSONArray. Error: " + e.toString());
+				} catch (Exception e) {
+					Log.e("Error:", "Error: " + e.toString());
+				}
+				
+				// If the game status is "y", then it has begun - go to next activity!
+				if (status.equals("y")) {
+					// Show next activity
+					Intent intent = new Intent(getApplicationContext(), PhoneActivity.class);
+			    	startActivity(intent);
+				}
+			}
+			return null;
+		}
+		
 	}
 }
