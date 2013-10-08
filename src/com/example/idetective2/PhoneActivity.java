@@ -6,6 +6,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -32,6 +33,7 @@ public class PhoneActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				r.stop();
+				gotoCutsceneActivity(); //SKYUMS TESTDRILLERLERL LERL ELF
 				
 				/*
 				 * Use AudioManager
@@ -48,5 +50,11 @@ public class PhoneActivity extends Activity {
 		getMenuInflater().inflate(R.menu.phone, menu);
 		return true;
 	}
+	
+	//SÅ SKYUM KAN TESTE VIDEO LOLOLOLOLOL
+	private void gotoCutsceneActivity() {
+    	Intent intent = new Intent(getApplicationContext(), CutsceneActivity.class);
+    	startActivity(intent);
+    }
 
 }
